@@ -15,6 +15,11 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteHolder> {
         this.clientes = clientes;
     }
 
+    public void adicionarCliente(Cliente cliente){
+        clientes.add(cliente);
+        notifyItemInserted(getItemCount());
+    }
+
     @Override
     public ClienteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ClienteHolder(LayoutInflater.from(parent.getContext())

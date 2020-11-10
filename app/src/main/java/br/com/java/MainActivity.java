@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 ClienteDAO dao = new ClienteDAO(getBaseContext());
                 boolean sucesso = dao.salvar(nome, sexo, uf, vip);
                 if(sucesso) {
+                    Cliente cliente = dao.retornarUltimo();
+                    adapter.adicionarCliente(cliente);
+
                     //limpa os campos
                     txtNome.setText("");
                     rgSexo.setSelected(false);
