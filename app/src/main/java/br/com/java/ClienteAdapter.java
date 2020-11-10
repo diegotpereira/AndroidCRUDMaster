@@ -29,6 +29,11 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteHolder> {
         clientes.set(clientes.indexOf(cliente), cliente);
         notifyItemChanged(clientes.indexOf(cliente));
     }
+    public void removerCliente(Cliente cliente){
+        int position = clientes.indexOf(cliente);
+        clientes.remove(position);
+        notifyItemRemoved(position);
+    }
 
     @Override
     public ClienteHolder onCreateViewHolder(ViewGroup parent, int viewType) {

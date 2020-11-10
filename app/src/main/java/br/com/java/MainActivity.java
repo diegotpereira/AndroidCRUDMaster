@@ -107,12 +107,22 @@ public class MainActivity extends AppCompatActivity {
 
                 //salvando os dados
                 ClienteDAO dao = new ClienteDAO(getBaseContext());
-                boolean sucesso = dao.salvar(nome, sexo, uf, vip);
+                boolean sucesso;
+                if(clienteEditado != null)
+                    sucesso = dao.salvar(clienteEditado.getId(), nome, sexo, uf, vip);
+                else
+                    sucesso = dao.salvar(nome, sexo, uf, vip);
+
                 if(sucesso) {
                     Cliente cliente = dao.retornarUltimo();
-                    adapter.adicionarCliente(cliente);
+                    if(clienteEditado != null){
+                        adapter.atualizarCliente(cliente);
+                        clienteEditado = null;
+                    }else
+                        adapter.adicionarCliente(cliente);
 
                     //limpa os campos
+                    clienteEditado = null;
                     txtNome.setText("");
                     rgSexo.setSelected(false);
                     spnEstado.setSelection(0);
