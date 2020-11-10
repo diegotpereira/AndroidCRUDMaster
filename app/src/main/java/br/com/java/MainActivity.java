@@ -1,5 +1,6 @@
 package br.com.java;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,10 +19,25 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
+
+    Cliente clienteEditado = null;
+
+    private int getIndex(Spinner spinner, String myString)
+    {
+        int index = 0;
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +45,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //verifica se começou agora ou se veio de uma edição
+        Intent intent = getIntent();
+        if(intent.hasExtra("cliente")){
+            findViewById(R.id.includemain).setVisibility(View.INVISIBLE);
+            findViewById(R.id.includecadastro).setVisibility(View.VISIBLE);
+            findViewById(R.id.fab).setVisibility(View.INVISIBLE);
+            clienteEditado = (Cliente) intent.getSerializableExtra("cliente");
+            EditText txtNome = (EditText)findViewById(R.id.txtNome);
+            Spinner spnEstado = (Spinner)findViewById(R.id.spnEstado);
+            CheckBox chkVip = (CheckBox)findViewById(R.id.chkVip);
+
+            txtNome.setText(clienteEditado.getNome());
+            chkVip.setChecked(clienteEditado.getVip());
+            spnEstado.setSelection(getIndex(spnEstado, clienteEditado.getUf()));
+            if(clienteEditado.getSexo() != null){
+                RadioButton rb;
+                if(clienteEditado.getSexo().equals("M"))
+                    rb = (RadioButton)findViewById(R.id.rbMasculino);
+                else
+                    rb = (RadioButton)findViewById(R.id.rbFeminino);
+                rb.setChecked(true);
+            }
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
