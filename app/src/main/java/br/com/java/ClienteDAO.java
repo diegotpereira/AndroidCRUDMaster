@@ -36,5 +36,19 @@ public class ClienteDAO {
         cursor.close();
         return clientes;
     }
+    public Cliente retornarUltimo(){
+        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Clientes ORDER BY ID DESC", null);
+        if(cursor.moveToFirst()){
+            int id = cursor.getInt(cursor.getColumnIndex("ID"));
+            String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+            String sexo = cursor.getString(cursor.getColumnIndex("Sexo"));
+            String uf = cursor.getString(cursor.getColumnIndex("UF"));
+            boolean vip = cursor.getInt(cursor.getColumnIndex("Vip")) > 0;
+            cursor.close();
+            return new Cliente(id, nome, sexo, uf, vip);
+        }
+
+        return null;
+    }
 
 }

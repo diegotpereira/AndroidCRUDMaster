@@ -7,6 +7,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 
@@ -84,8 +87,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        configurarRecycler();
+    }
 
+    RecyclerView recyclerView;
+    ClienteAdapter adapter;
 
+    private void configurarRecycler() {
+        // Configurando o gerenciador de layout para ser uma lista.
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Adiciona o adapter que irá anexar os objetos à lista.
+        ClienteDAO dao = new ClienteDAO(this);
+        adapter = new ClienteAdapter(dao.retornarTodos());
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     @Override
