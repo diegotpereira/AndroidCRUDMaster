@@ -50,9 +50,7 @@ public class Cliente implements Serializable {
         this.uf = uf;
     }
 
-    public boolean isVip() {
-        return vip;
-    }
+    public boolean getVip(){ return this.vip; }
 
     public void setVip(boolean vip) {
         this.vip = vip;
