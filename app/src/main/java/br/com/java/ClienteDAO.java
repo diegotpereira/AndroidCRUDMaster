@@ -58,5 +58,8 @@ public class ClienteDAO {
 
         return null;
     }
+    public boolean excluir(int id){
+        return gw.getDatabase().delete(TABLE_CLIENTES, "ID=?", new String[]{ id + "" }) > 0;
+    }
 
 }
