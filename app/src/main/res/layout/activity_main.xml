@@ -25,6 +25,11 @@
         layout="@layout/content_main"
         android:visibility="visible"/>
 
+    <include
+        android:id="@+id/includecadastro"
+        layout="@layout/content_cadastro"
+        android:visibility="invisible"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
